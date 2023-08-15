@@ -1,0 +1,11 @@
+{
+  "keybinds": {
+    "left":     "K_LEFT",
+    "right":    "K_RIGHT",
+    "hDrop":    "K_SPACE",
+    "sDrop":    "K_DOWN",
+    "hold":     "K_c",
+    "rotClock": "K_x",
+    "rotAnti":  "K_z"
+  }
+}
