@@ -1,0 +1,22 @@
+{
+  "keybinds": {
+    "left":     "LEFT",
+    "right":    "RIGHT",
+    "hDrop":    "SPACE",
+    "sDrop":    "DOWN",
+    "hold":     "c",
+    "rotClock": "x",
+    "rotAnti":  "z"
+  },
+	"videoSettings": {
+		"fps": 60,
+		"resolution": 0,
+		"fullscreen": false
+	},
+	"audioSettings": {
+		"masterVolume": 100,
+		"gameVolume": 100,
+		"musicVolume": 100
+	}
+	
+}
