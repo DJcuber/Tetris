@@ -12,8 +12,10 @@ class Main:
     self.clock: pg.time.Clock = pg.time.Clock()
     self.tickrate: int = 16
     self.isRunning: bool = True
+    self.isInstRunning: bool = True
     self.keys: keys.Keys = keys.Keys()
-    self.game: game.Game = game.Game(self)
+    self.mode: str = "menu"
+    self.mainLoop()
 
   def eventHandle(self) -> int:
     for ev in pg.event.get():
@@ -36,6 +38,13 @@ class Main:
 
     return 0
 
+  def mainLoop(self) -> None:
+    while self.isRunning:
+      self.isInstRunning = True
+      if self.mode == "menu":
+        menu.Menu(self)
+      elif self.mode == "game":
+        game.Game(self)
 
 def main():
   instance = Main()
