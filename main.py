@@ -36,6 +36,9 @@ class Main:
       elif ev.type == pg.MOUSEBUTTONDOWN:
         self.display.clickEvent((True, ev.pos, ev.button))
 
+      elif ev.type == pg.MOUSEBUTTONUP:
+        self.display.clickEvent((False, ev.pos, ev.button))
+
     return 0
 
   def mainLoop(self) -> None:
@@ -45,6 +48,7 @@ class Main:
         menu.Menu(self)
       elif self.mode == "game":
         game.Game(self)
+    pg.quit()
 
 def main():
   instance = Main()

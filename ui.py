@@ -37,7 +37,7 @@ class UIElement:
     self.text: str = text
     self.parent: Display = None
     self.clicked = False
-    self.surface = pg.surface.Surface(pos)
+    self.surface = pg.surface.Surface(size)
     self.surface.fill(color)
   
   def bindOnClick(self, func):

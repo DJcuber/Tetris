@@ -9,8 +9,10 @@ class Game:
 
   def gameLoop(self) -> int:
     display = self.main.display
+    display.window.fill("#FFF8F0")
+    display.ui = []
     board = Board(self.main)
-    testPiece = pieces.LPiece(board)
+    testPiece = pieces.TPiece(board)
     board.board[4][0].state = 1 
     testPiece.move([0, 0])
 
