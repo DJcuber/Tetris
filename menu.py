@@ -8,10 +8,11 @@ class Menu:
     self.menuLoop()
 
   def menuLoop(self) -> None:
-    self.main.display.window.fill("#FFF8F0")
-    self.main.display.ui = []
+    display = self.main.display
+    display.window.fill("#FFF8F0")
+    display.ui = []
 
-    start = self.main.display.addElement((200, 100), (50, 25), "#23CE6B")
+    start = display.addElement((200, 100), (50, 25), "#23CE6B")
     
     @start.bindOnClick
     def playEv():
@@ -28,5 +29,3 @@ class Menu:
 
 
 # #FFF8F0, #01161E, #77878B, #23CE6B, #DD1C1A
-
-#Error: play button doesn't work
