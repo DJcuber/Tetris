@@ -5,8 +5,9 @@ class Display:
     self.windowSize: tuple[int] = (1200, 900)
     self.window: pg.Surface = pg.display.set_mode(self.windowSize)
     self.ui: list[UIElement] = []
+    self.font = pg.font.SysFont("arial", 24)
   
-  def addElement(self, pos, size, color, text=""):
+  def addElement(self, pos, size, color, text=None):
     self.ui.append(UIElement(pos, size, color, self, text))
     return self.ui[-1] #UIElement
   
@@ -18,7 +19,7 @@ class Display:
           ui.clicked = True
           break
         elif not(ctx[0]) and ctx[2] == 1:
-          if ui.clicked:
+          if ui.clicked and ui.clickable:
             ui.onClick()
           for j in self.ui:
             j.clicked = False
@@ -34,14 +35,20 @@ class UIElement:
   def __init__(self, pos, size, color, parent, text) -> None:
     self.size: list[int] = size
     self.pos: list[int] = pos
-    self.text: str = text
-    self.parent: Display = None
+    self.parent: Display = parent
+    self.clickable = False
     self.clicked = False
     self.surface = pg.surface.Surface(size)
     self.surface.fill(color)
+
+    if text != None:
+      self.text: pg.Surface = self.parent.font.render(text, True, "#000000")
+      self.textRect = self.text.get_rect(center = (size[0]//2, size[1]//2))
+      self.surface.blit(self.text, self.textRect)
   
   def bindOnClick(self, func):
     self.onClick = func
+    self.clickable = True
   
   def onClick(self):
     print("Undefined")

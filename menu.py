@@ -12,12 +12,14 @@ class Menu:
     display.window.fill("#FFF8F0")
     display.ui = []
 
-    start = display.addElement((200, 100), (50, 25), "#23CE6B")
+    start = display.addElement((500, 500), (100, 100), "#23CE6B", text="play")
     
     @start.bindOnClick
     def playEv():
       self.main.mode = "game"
       self.main.isInstRunning = False
+
+    banner = display.addElement((0, 0), (display.windowSize[0], display.windowSize[1]*(2/9)), "#77878B")
 
     
     while self.main.isRunning and self.main.isInstRunning:
