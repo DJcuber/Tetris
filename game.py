@@ -1,5 +1,6 @@
 import pygame as pg
 import pieces
+import random
 
 class Game:
   def __init__(self, main) -> None:
@@ -12,25 +13,34 @@ class Game:
     display.window.fill("#FFF8F0")
     display.ui = []
     board = Board(self.main)
-    testPiece = pieces.TPiece(board)
+    currentPiece = pieces.TPiece(board)
     board.board[4][0].state = 1 
-    testPiece.move([0, 0])
 
+    pieceList = [pieces.IPiece, pieces.OPiece, pieces.TPiece, pieces.SPiece, pieces.ZPiece, pieces.JPiece, pieces.LPiece]
 
     while self.gameRunning:
       display.window.blit(board.surface, ((display.windowSize[0] - display.windowSize[1]*10/24)/2, display.windowSize[1]*2/24))
       if self.main.keys.keyEvents["sDrop"]:
-        testPiece.move([0, -1])
-
-      if self.main.keys.keyEvents["left"]:
-        testPiece.move([-1, 0])
+        currentPiece.move([0, -1])
       
-      if self.main.keys.keyEvents["right"]:
-        testPiece.move([1, 0])
+      if self.main.keys.keyEvents["hDrop"]:
+        while not(currentPiece.move([0, -1])):
+          pass
+        currentPiece = pieceList[random.randint(0, 6)](board)
 
-      pg.display.flip()
+
+      if self.main.keys.keyEvents["left"] and not(self.main.keys.keyEvents["right"]):
+        currentPiece.move([-1, 0])
+      
+      elif self.main.keys.keyEvents["right"] and not(self.main.keys.keyEvents["left"]):
+        currentPiece.move([1, 0])
+      
+      board.updateBoard()
+      display.render()
+
       if self.main.eventHandle():
         return 1
+      
       self.main.clock.tick(self.main.tickrate)
     return 0
 

@@ -3,8 +3,6 @@ import pygame.locals as locals
 import json
 
 
-
-
 class Keys:
   def __init__(self):
     with open("options.json", "r") as f:

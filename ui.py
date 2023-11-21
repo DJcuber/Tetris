@@ -2,7 +2,7 @@ import pygame as pg
 
 class Display:
   def __init__(self) -> None:
-    self.windowSize: tuple[int] = (1200, 900)
+    self.windowSize: tuple[int] = (960, 720)
     self.window: pg.Surface = pg.display.set_mode(self.windowSize)
     self.ui: list[UIElement] = []
     self.font = pg.font.SysFont("arial", 24)
