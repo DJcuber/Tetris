@@ -25,6 +25,7 @@ class Piece:
         self.board.updateBoard()
         return 1
     
+    
     self.squarePos = newPos
     for i in self.squarePos:
       self.board.board[i[0]][i[1]].state = self.color
@@ -72,5 +73,6 @@ class LPiece(Piece):
     super().__init__(board)
     self.color = 7
     self.squarePos = [[3, 20], [4, 20], [5, 20], [5, 21]]
+
 
 #0: None, 1: Cyan, 2: Yellow, 3: Purple, 4: Green, 5: Red, 6: Blue, 7: Orange, 8: Gray
