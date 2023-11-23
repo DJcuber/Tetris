@@ -27,6 +27,9 @@ class Main:
         for i, j in self.keys.binds.items():
           if ev.key == j:
             self.keys.keyEvents[i] = True
+            for bind in self.keys.keyFunc:
+              if bind == i:
+                self.keys.keyFunc[bind](self.keys.ctx)
       
       elif ev.type == pg.KEYUP:
         for i, j in self.keys.binds.items():
