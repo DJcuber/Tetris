@@ -14,10 +14,13 @@ class Keys:
       
     self.keyEvents: dict = {i:False for i in ("left", "right", "hDrop", "sDrop", "hold", "rotClock", "rotAnti")}
     self.keyFunc: dict = dict()
+    self.ctx = None
 
   def bindOnKey(self, *args, **kwargs):
     def inner(func):
       self.keyFunc[kwargs["action"]] = func
+      if "ctx" in kwargs:
+        self.ctx = kwargs["ctx"]
       
     return inner
 
