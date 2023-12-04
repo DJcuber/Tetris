@@ -15,7 +15,8 @@ class Game:
     self.board = Board(self.main)
     
     
-    self.currentPiece = pieces.TPiece(self.board)
+    self.currentPiece = pieces.IPiece(self.board)
+    self.currentPiece.move((0, 0))
     
     
     self.board.board[4][0].state = 1 
@@ -28,6 +29,14 @@ class Game:
       while not(ctx.currentPiece.move([0, -1])):
           pass
       ctx.currentPiece = pieceList[random.randint(0, 6)](ctx.board)
+
+    @self.main.keys.bindOnKey(action = "rotClock", ctx = self)
+    def rotClockBind(ctx):
+      self.currentPiece.rotate(1)
+
+    @self.main.keys.bindOnKey(action = "rotAnti", ctx = self)
+    def rotClockBind(ctx):
+      self.currentPiece.rotate(-1)
     
     while self.gameRunning:
       
