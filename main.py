@@ -12,7 +12,7 @@ class Main:
     self.clock: pg.time.Clock = pg.time.Clock()
     self.tickrate: int = 16
     self.isRunning: bool = True
-    self.isInstRunning: bool = True
+    self.isModeRunning: bool = True
     self.keys: keys.Keys = keys.Keys()
     self.mode: str = "menu"
     self.mainLoop()
@@ -21,6 +21,7 @@ class Main:
     for ev in pg.event.get():
       if ev.type == pg.QUIT:
         self.isRunning = False
+        self.isModeRunning = False
         return 1
       
       elif ev.type == pg.KEYDOWN:
@@ -46,7 +47,7 @@ class Main:
 
   def mainLoop(self) -> None:
     while self.isRunning:
-      self.isInstRunning = True
+      self.isModeRunning = True
       if self.mode == "menu":
         menu.Menu(self)
       elif self.mode == "game":
