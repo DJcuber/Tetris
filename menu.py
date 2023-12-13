@@ -24,19 +24,21 @@ class Menu:
     @play.bindOnClick
     def playEv():
       self.main.mode = "game"
-      self.main.isInstRunning = False
+      self.main.isModeRunning = False
     
     @exit.bindOnClick
     def exitEv():
       self.main.isRunning = False
+      self.main.isModeRunning = False
       
 
 
     
-    while self.main.isRunning and self.main.isInstRunning:
+    while self.main.isRunning and self.main.isModeRunning:
       
       self.main.display.render()
-      self.main.eventHandle()
+      if self.main.eventHandle():
+        return 1
       self.main.clock.tick(self.main.tickrate)
       
 

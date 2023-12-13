@@ -7,7 +7,7 @@ class Display:
     self.ui: list[UIElement] = []
     self.font = pg.font.SysFont("arial", 24)
   
-  def addElement(self, pos, size, color, text=None):
+  def addElement(self, pos, size, color, text=None) -> object:
     self.ui.append(UIElement(pos, size, color, self, text))
     return self.ui[-1] #UIElement
   
@@ -46,7 +46,7 @@ class UIElement:
       self.textRect = self.text.get_rect(center = (size[0]//2, size[1]//2))
       self.surface.blit(self.text, self.textRect)
   
-  def bindOnClick(self, func):
+  def bindOnClick(self, func) -> None:
     self.onClick = func
     self.clickable = True
   

@@ -1,7 +1,7 @@
 class Piece:
   def __init__(self, board) -> None:
     self.board: object = board
-    self.piecePos = [3, 18]
+    self.piecePos: list[int] = [3, 18]
     self.squarePos: list[list[list[int]]] = [[[0 for i in range(2)] for i in range(4)] for i in range(4)]
     self.rotation = 0
     self.color = 0
@@ -28,12 +28,19 @@ class Piece:
         return 1
 
     self.piecePos = [self.piecePos[0]+direction[0], self.piecePos[1]+direction[1]] #updates position
+
+    rows = []
+    
     for i in self.squarePos[self.rotation]:
       self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = self.color
+      rows.append(i[0]+self.piecePos[0])
     self.board.updateBoard()
+
+    
+    self.board.clearRow(rows)
     return 0
 
-  def rotate(self, direction):
+  def rotate(self, direction) -> int:
       
     newRotation = self.rotation + direction
     newRotation %= 4
