@@ -28,6 +28,8 @@ class Game:
     def hDropBind(ctx):
       while not(ctx.currentPiece.move([0, -1])):
           pass
+      rows = [i[1] + ctx.currentPiece.piecePos[1] for i in ctx.currentPiece.squarePos[ctx.currentPiece.rotation]]
+      ctx.board.clearRow(rows)
       ctx.currentPiece = pieceList[random.randint(0, 6)](ctx.board)
 
     @self.main.keys.bindOnKey(action = "rotClock", ctx = self)
@@ -72,12 +74,34 @@ class Board:
   
   def updateBoard(self) -> None:
     for i in range(10):
-      for j in range(20): 
+      for j in range(20):  #22
         if self.board[i][j].state == 0:
           self.board[i][j].surface.fill("#ffffff")
         else:
           self.board[i][j].surface.fill(Square.colors[self.board[i][j].state])
         self.surface.blit(self.board[i][j].surface, (i*self.game.main.display.windowSize[1]/24, self.game.main.display.windowSize[1] * 20/24 - (j+1)*self.game.main.display.windowSize[1]/24))
+
+  def clearRow(self, rows) -> int:
+    linesCleared = 0
+    for rowIndex in range(len(rows)):
+      
+      for column in self.board:
+        if column[rows[rowIndex]].state == 0:
+          break
+      else:
+        #Line is cleared
+        for column in range(10):
+          for row in range(rows[rowIndex], 21):
+            self.board[column][row] = self.board[column][row+1]
+          self.board[column][21] = Square(self)
+        linesCleared += 1
+        rows = [i - 1 for i in rows]
+    self.updateBoard()
+    
+    if linesCleared > 0:
+      return 1
+    return 0
+  
 
 class Square:
   colors = [None, "#00ffff", "#ffff00", "#9900cc", "#00ff00", "#ff0000", "#0000ff", "#ff9900", "#999999"]

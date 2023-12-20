@@ -28,6 +28,8 @@ class Piece:
         return 1
 
     self.piecePos = [self.piecePos[0]+direction[0], self.piecePos[1]+direction[1]] #updates position
+
+    
     for i in self.squarePos[self.rotation]:
       self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = self.color
     self.board.updateBoard()
