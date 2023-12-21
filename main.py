@@ -10,21 +10,27 @@ class Main:
     pg.init()
     self.display: ui.Display = ui.Display()
     self.clock: pg.time.Clock = pg.time.Clock()
-    self.tickrate: int = 16
+    self.tickrate: int = 64
     self.isRunning: bool = True
+    self.isModeRunning: bool = True
     self.keys: keys.Keys = keys.Keys()
-    self.game: game.Game = game.Game(self)
+    self.mode: str = "menu"
+    self.mainLoop()
 
   def eventHandle(self) -> int:
     for ev in pg.event.get():
       if ev.type == pg.QUIT:
         self.isRunning = False
+        self.isModeRunning = False
         return 1
       
       elif ev.type == pg.KEYDOWN:
         for i, j in self.keys.binds.items():
           if ev.key == j:
             self.keys.keyEvents[i] = True
+            for bind in self.keys.keyFunc:
+              if bind == i:
+                self.keys.keyFunc[bind](self.keys.ctx)
       
       elif ev.type == pg.KEYUP:
         for i, j in self.keys.binds.items():
@@ -34,8 +40,19 @@ class Main:
       elif ev.type == pg.MOUSEBUTTONDOWN:
         self.display.clickEvent((True, ev.pos, ev.button))
 
+      elif ev.type == pg.MOUSEBUTTONUP:
+        self.display.clickEvent((False, ev.pos, ev.button))
+
     return 0
 
+  def mainLoop(self) -> None:
+    while self.isRunning:
+      self.isModeRunning = True
+      if self.mode == "menu":
+        menu.Menu(self)
+      elif self.mode == "game":
+        game.Game(self)
+    pg.quit()
 
 def main():
   instance = Main()
