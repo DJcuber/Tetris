@@ -64,6 +64,13 @@ class Piece:
       self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = self.color #error
     self.board.updateBoard()
     return 0
+
+  def place(self, *args):
+    while not(self.move([0, -1])):
+          pass
+    rows = [i[1] + self.piecePos[1] for i in self.squarePos[self.rotation]]
+    self.board.clearRow(rows)
+    
       
     
     

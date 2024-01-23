@@ -1,0 +1,6 @@
+extend board
+piece bag
+points
+game over
+hold
+hold and queue ui

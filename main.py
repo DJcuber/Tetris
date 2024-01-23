@@ -10,7 +10,7 @@ class Main:
     pg.init()
     self.display: ui.Display = ui.Display()
     self.clock: pg.time.Clock = pg.time.Clock()
-    self.tickrate: int = 16
+    self.tickrate: int = 64
     self.isRunning: bool = True
     self.isModeRunning: bool = True
     self.keys: keys.Keys = keys.Keys()
