@@ -18,10 +18,11 @@ class Game:
       if not(i in unique):
         unique.append(i)
     
-    for i in unique: #IS VERY BROKEN
+    for i in unique: #IS VERY BROKEN NOT
       i[0](i[1])
       if i[0] == self.currentPiece.place:
-        self.currentPiece = [pieces.IPiece, pieces.OPiece, pieces.TPiece, pieces.SPiece, pieces.ZPiece, pieces.JPiece, pieces.LPiece][random.randint(0, 6)](self.board)
+        self.currentPiece = self.pieceList[random.randint(0, 6)](self.board)
+        self.currentPiece.move((0, 0))
     self.actionQueue = []
   
 
@@ -32,15 +33,13 @@ class Game:
     self.board = Board(self)
 
     ticks = 0
-    
-    self.currentPiece = pieces.IPiece(self.board)
+
+    self.pieceList = [pieces.IPiece, pieces.OPiece, pieces.TPiece, pieces.SPiece, pieces.ZPiece, pieces.JPiece, pieces.LPiece]
+    self.currentBag = [i for i in self.pieceList]
+    random.shuffle(self.currentBag)
+    self.currentPiece = self.pieceList[random.randint(0, 6)](self.board)
     self.currentPiece.move((0, 0))
-    
-    
-    self.board.board[4][0].state = 1 
-
-    pieceList = [pieces.IPiece, pieces.OPiece, pieces.TPiece, pieces.SPiece, pieces.ZPiece, pieces.JPiece, pieces.LPiece]
-
+     
 
     @self.main.keys.bindOnKey(action = "hDrop", ctx = self) #HAHAHHAHAHAHHAHAHAHHA
     def hDropBind(ctx):
@@ -93,17 +92,17 @@ class Board:
   def __init__(self, game) -> None:
     self.game: Game = game
     self.board: list[list[Square]] = [[Square(self) for i in range(22)] for i in range(10)]
-    self.surface: pg.Surface = pg.Surface((self.game.main.display.windowSize[1]*10/24, self.game.main.display.windowSize[1]*20/24))
+    self.surface: pg.Surface = pg.Surface((self.game.main.display.windowSize[1]*10/24, self.game.main.display.windowSize[1]*22/24)) #CHANGE THESE NUMBERS
     self.surface.fill("#FFFFFF")
   
   def updateBoard(self) -> None:
     for i in range(10):
-      for j in range(20):  #22
+      for j in range(22):  #22
         if self.board[i][j].state == 0:
           self.board[i][j].surface.fill("#ffffff")
         else:
           self.board[i][j].surface.fill(Square.colors[self.board[i][j].state])
-        self.surface.blit(self.board[i][j].surface, (i*self.game.main.display.windowSize[1]/24, self.game.main.display.windowSize[1] * 20/24 - (j+1)*self.game.main.display.windowSize[1]/24))
+        self.surface.blit(self.board[i][j].surface, (i*self.game.main.display.windowSize[1]/24, self.game.main.display.windowSize[1] * 22/24 - (j+1)*self.game.main.display.windowSize[1]/24)) #AND HERE
 
   def clearRow(self, rows) -> int:
     linesCleared = 0
