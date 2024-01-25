@@ -21,7 +21,13 @@ class Game:
     for i in unique: #IS VERY BROKEN NOT
       i[0](i[1])
       if i[0] == self.currentPiece.place:
-        self.currentPiece = self.pieceList[random.randint(0, 6)](self.board)
+        self.currentBag.pop(0)
+        self.currentPiece = self.currentBag[0](self.board)
+        if len(self.currentBag) < 7:
+          tempBag = [i for i in self.pieceList]
+          random.shuffle(tempBag)
+          for i in tempBag:
+            self.currentBag.append(i)
         self.currentPiece.move((0, 0))
     self.actionQueue = []
   
@@ -32,12 +38,20 @@ class Game:
     display.ui = []
     self.board = Board(self)
 
+    self.score = 0
+    #scoreUI = display.addElement((display.windowSize[0]/2, display.windowSize[1]*1/24), (display.windowSize[0]/2, display.windowSize[1]/24), "#FFF8F0", text="score:")
+    scorePos = (display.windowSize[0]/2, display.windowSize[1]/24)
+    scoreSize = (display.windowSize[0]/4, display.windowSize[1]/24)
+    scoreSurface = pg.surface.Surface(scoreSize)
+    
+                                
+
     ticks = 0
 
     self.pieceList = [pieces.IPiece, pieces.OPiece, pieces.TPiece, pieces.SPiece, pieces.ZPiece, pieces.JPiece, pieces.LPiece]
     self.currentBag = [i for i in self.pieceList]
     random.shuffle(self.currentBag)
-    self.currentPiece = self.pieceList[random.randint(0, 6)](self.board)
+    self.currentPiece = self.currentBag[0](self.board)
     self.currentPiece.move((0, 0))
      
 
@@ -67,6 +81,12 @@ class Game:
       elif self.main.keys.keyEvents["right"] and not(self.main.keys.keyEvents["left"]):
         self.addAction(self.currentPiece.move, [1, 0])
         #self.currentPiece.move([1, 0])
+
+      scoreSurface.fill("#FFF8F0")
+      scoreText = display.font.render(f"score: {self.score}", True, "#000000")
+      scoreRect = scoreText.get_rect(center=(scoreSize[0]//2, scoreSize[1]//2))
+      scoreSurface.blit(scoreText, scoreRect)
+      display.window.blit(scoreSurface, scorePos)
       
       self.board.updateBoard()
       display.render()
@@ -82,7 +102,7 @@ class Game:
         ticks = 0
 
 
-      
+    
     self.main.isModeRunning = False
     return 0
 
@@ -121,8 +141,14 @@ class Board:
         rows = [i - 1 for i in rows]
     self.updateBoard()
     
-    if linesCleared > 0:
-      return 1
+    if linesCleared == 1:
+      self.game.score += 40
+    elif linesCleared == 2:
+      self.game.score += 100
+    elif linesCleared == 3:
+      self.game.score += 300
+    elif linesCleared == 4:
+      self.game.score += 1200
     return 0
   
 

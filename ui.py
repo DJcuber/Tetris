@@ -27,7 +27,6 @@ class Display:
   def render(self) -> None:
     for ui in self.ui:
       self.window.blit(ui.surface, ui.pos)
-    
     pg.display.flip()
           
 
@@ -35,11 +34,13 @@ class UIElement:
   def __init__(self, pos, size, color, parent, text) -> None:
     self.size: list[int] = size
     self.pos: list[int] = pos
+    self.color = color
     self.parent: Display = parent
     self.clickable = False
     self.clicked = False
     self.surface = pg.surface.Surface(size)
     self.surface.fill(color)
+    self.message = text
 
     if text != None:
       self.text: pg.Surface = self.parent.font.render(text, True, "#000000")

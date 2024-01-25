@@ -1,5 +1,5 @@
 extend board x
-piece bag
+piece bag x
 points
 game over
 hold

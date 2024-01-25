@@ -5,6 +5,7 @@ class Piece:
     self.squarePos: list[list[list[int]]] = [[[0 for i in range(2)] for i in range(4)] for i in range(4)]
     self.rotation = 0
     self.color = 0
+    
   
   def move(self, direction) -> int:
     newPos: list[list[int]] = [[i[0]+direction[0]+self.piecePos[0], i[1]+direction[1]+self.piecePos[1]] for i in self.squarePos[self.rotation]]
