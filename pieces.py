@@ -20,12 +20,16 @@ class Piece:
         for j, k in enumerate(self.squarePos[self.rotation]):
           self.board.board[k[0]+self.piecePos[0]][k[1]+self.piecePos[1]].state = self.color
         self.board.updateBoard()
+        if i[1] < 0:
+          return "place"
         return 1
 
       elif self.board.board[i[0]][i[1]].state != 0:
         for j, k in enumerate(self.squarePos[self.rotation]):
           self.board.board[k[0]+self.piecePos[0]][k[1]+self.piecePos[1]].state = self.color
         self.board.updateBoard()
+        if direction[1] == -1:
+          return "place"
         return 1
 
     self.piecePos = [self.piecePos[0]+direction[0], self.piecePos[1]+direction[1]] #updates position

@@ -1,6 +1,7 @@
 extend board x
 piece bag x
-points
+points x
+make pieces fall
 game over
 hold
 hold and queue ui

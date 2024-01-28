@@ -19,8 +19,8 @@ class Game:
         unique.append(i)
     
     for i in unique: #IS VERY BROKEN NOT
-      i[0](i[1])
-      if i[0] == self.currentPiece.place:
+      value = i[0](i[1])
+      if i[0] == self.currentPiece.place or value == "place":
         self.currentBag.pop(0)
         self.currentPiece = self.currentBag[0](self.board)
         if len(self.currentBag) < 7:
@@ -97,9 +97,20 @@ class Game:
       self.main.clock.tick(self.main.tickrate)
       ticks += 1
       
-      if (ticks % self.main.tickrate) == self.main.tickrate//8:
+      if (ticks % (self.main.tickrate / 16)) == 0: #16 times a sec, ticks % (tickrate / 2)
         self.processActions()
+
+      if (ticks % (self.main.tickrate / 2)) == 0: #4 times a sec
+        if self.addAction(self.currentPiece.move, [0, -1]):
+          self.addAction(self.currentPiece.place, [None])
+
+      if ticks == self.main.tickrate:
         ticks = 0
+      
+
+      
+      
+
 
 
     
