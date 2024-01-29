@@ -52,6 +52,9 @@ class Main:
         menu.Menu(self)
       elif self.mode == "game":
         game.Game(self)
+      else:
+        self.isRunning = False
+    print("quitting")
     pg.quit()
 
 def main():

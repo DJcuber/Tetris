@@ -11,8 +11,11 @@ class Piece:
     newPos: list[list[int]] = [[i[0]+direction[0]+self.piecePos[0], i[1]+direction[1]+self.piecePos[1]] for i in self.squarePos[self.rotation]]
     
     #oldState: int = self.board.board[self.squarePos[self.rotation][0][0]+self.piecePos[0]][self.squarePos[self.rotation][0][1]+self.piecePos[1]].state
+
     
     for i in self.squarePos[self.rotation]:
+      if self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state != 0 and self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state != self.color:
+        return 1
       self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = 0 #Removes previous squares
     
     for i in newPos:

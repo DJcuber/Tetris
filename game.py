@@ -28,7 +28,9 @@ class Game:
           random.shuffle(tempBag)
           for i in tempBag:
             self.currentBag.append(i)
-        self.currentPiece.move((0, 0))
+        if self.currentPiece.move((0, 0)) == 1:
+          self.main.isModeRunning = False #doesn't quit loop
+          
     self.actionQueue = []
   
 
@@ -100,21 +102,15 @@ class Game:
       if (ticks % (self.main.tickrate / 16)) == 0: #16 times a sec, ticks % (tickrate / 2)
         self.processActions()
 
-      if (ticks % (self.main.tickrate / 2)) == 0: #4 times a sec
+      if (ticks % (self.main.tickrate / 2)) == 0: #2 times a sec
         if self.addAction(self.currentPiece.move, [0, -1]):
           self.addAction(self.currentPiece.place, [None])
 
       if ticks == self.main.tickrate:
         ticks = 0
       
-
-      
-      
-
-
-
     
-    self.main.isModeRunning = False
+    self.main.mode = "game over"
     return 0
 
   
