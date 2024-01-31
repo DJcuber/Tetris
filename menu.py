@@ -15,9 +15,8 @@ class Menu:
 
     play = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/10), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#23CE6B", text="Play")
 
-    settings = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*9/20), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#D3D3D3", text="Settings")
 
-    leaderboard = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/5), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#D3D3D3", text="Leaderboard")
+    leaderboard = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*9/20), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#D3D3D3", text="Leaderboard")
 
     exit = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/4), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#DD1C1A", text="Quit")
     

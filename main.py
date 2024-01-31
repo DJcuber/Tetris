@@ -54,7 +54,6 @@ class Main:
         game.Game(self)
       else:
         self.isRunning = False
-    print("quitting")
     pg.quit()
 
 def main():

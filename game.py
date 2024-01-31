@@ -1,5 +1,6 @@
 import pygame as pg
 import pieces
+import gameOver
 import random
 
 class Game:
@@ -108,9 +109,10 @@ class Game:
 
       if ticks == self.main.tickrate:
         ticks = 0
-      
-    
+        
     self.main.mode = "game over"
+    gameOverScene = gameOver.GameOver(self.main, self.score)
+    
     return 0
 
   
