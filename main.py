@@ -4,18 +4,21 @@ import menu
 import game
 import keys
 import ui
+import logIn
 
 class Main:
   def __init__(self) -> None:
+    self.mode: str = "login"
+    self.isRunning: bool = True
+    self.isModeRunning: bool = True
+    self.mainLoop()
+
+  def initPg(self):
     pg.init()
     self.display: ui.Display = ui.Display()
     self.clock: pg.time.Clock = pg.time.Clock()
-    self.tickrate: int = 128
-    self.isRunning: bool = True
-    self.isModeRunning: bool = True
+    self.tickrate: int = 32
     self.keys: keys.Keys = keys.Keys()
-    self.mode: str = "menu"
-    self.mainLoop()
 
   def eventHandle(self) -> int:
     for ev in pg.event.get():
@@ -52,6 +55,11 @@ class Main:
         menu.Menu(self)
       elif self.mode == "game":
         game.Game(self)
+      elif self.mode == "login":
+        login = logIn.LogIn(self)
+        login.connect()
+        login.menu()
+        self.initPg()
       else:
         self.isRunning = False
     pg.quit()

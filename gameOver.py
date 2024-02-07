@@ -31,9 +31,17 @@ class GameOver:
             self.main.mode = "menu"
             self.main.isModeRunning = False
         
+        self.main.cursor.execute(f'INSERT INTO scores(score, datePlayed, playerID) VALUES({self.score}, )')
 
+        
         while self.main.isRunning and self.main.isModeRunning:
           self.main.display.render()
           if self.main.eventHandle():
             return 1
           self.main.clock.tick(self.main.tickrate)
+
+"""
+from time import gmtime, strftime
+strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+'Thu, 28 Jun 2001 14:17:15 +0000'
+"""

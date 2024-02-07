@@ -10,7 +10,8 @@ class LogIn:
     def connect(self):
         try:
             self.main.conn = mysql.connector.connect(host="localhost", user="root", passwd="", database = "Tetris")
-            self.cursor = self.main.conn.cursor()
+            self.main.cursor = self.main.conn.cursor()
+            self.cursor = self.main.cursor
         except:
             print("Database went :(")
 
@@ -23,7 +24,27 @@ class LogIn:
         return self.createUser()
     
     def login(self):
-        pass
+        while True:
+            user = input("Username: ")
+            passwd = input("Password: ")
+            passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest()
+
+            self.cursor.execute("SELECT userName, passHash FROM player")
+            data = self.cursor.fetchall()
+            for i in data:
+                if i[0] == user:
+                    if i[1] == passwd:
+                        pass
+                        self.main.user = user
+                        self.main.mode = "menu"
+                        return 
+                        #login
+                    else:
+                        print("Incorrect password")
+                        break
+            else:
+                print("User not found")
+        
 
     def createUser(self):
         self.cursor.execute("SELECT userName FROM player")
@@ -46,7 +67,8 @@ class LogIn:
                     break
         passwd = input("Enter a password\n")
         passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest()
-        self.cursor.execute(f"INSERT INTO player(userName, passHash) VALUES (\"{name}\", \"{passwd}\");")        
+        self.cursor.execute(f"INSERT INTO player(userName, passHash) VALUES (\"{name}\", \"{passwd}\");")
+        return self.menu()
 
         
 class Stub:
