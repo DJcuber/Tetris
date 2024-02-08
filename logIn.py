@@ -29,13 +29,13 @@ class LogIn:
             passwd = input("Password: ")
             passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest()
 
-            self.cursor.execute("SELECT userName, passHash FROM player")
+            self.cursor.execute("SELECT playerID, userName, passHash FROM player")
             data = self.cursor.fetchall()
             for i in data:
-                if i[0] == user:
-                    if i[1] == passwd:
+                if i[1] == user:
+                    if i[2] == passwd:
                         pass
-                        self.main.user = user
+                        self.main.user = i[0]
                         self.main.mode = "menu"
                         return 
                         #login

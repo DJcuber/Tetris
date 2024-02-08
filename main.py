@@ -5,6 +5,7 @@ import game
 import keys
 import ui
 import logIn
+import leaderboard
 
 class Main:
   def __init__(self) -> None:
@@ -60,6 +61,8 @@ class Main:
         login.connect()
         login.menu()
         self.initPg()
+      elif self.mode == "leaderboard":
+        leaderboard.Leaderboard(self)
       else:
         self.isRunning = False
     pg.quit()

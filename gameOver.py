@@ -1,5 +1,6 @@
 import pygame as pg
 import ui
+import time
 
 class GameOver:
     def __init__(self, main, score):
@@ -30,8 +31,10 @@ class GameOver:
         def menuEv():
             self.main.mode = "menu"
             self.main.isModeRunning = False
+
+        currentDate = time.strftime("%Y-%m-%d", time.gmtime())
         
-        self.main.cursor.execute(f'INSERT INTO scores(score, datePlayed, playerID) VALUES({self.score}, )')
+        self.main.cursor.execute(f'INSERT INTO score(score, datePlayed, playerID) VALUES({self.score}, "{currentDate}", {self.main.user})')
 
         
         while self.main.isRunning and self.main.isModeRunning:
