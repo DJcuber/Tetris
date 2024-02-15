@@ -35,7 +35,7 @@ class GameOver:
         currentDate = time.strftime("%Y-%m-%d", time.gmtime())
         
         self.main.cursor.execute(f'INSERT INTO score(score, datePlayed, playerID) VALUES({self.score}, "{currentDate}", {self.main.user})')
-
+        self.main.conn.commit()
         
         while self.main.isRunning and self.main.isModeRunning:
           self.main.display.render()

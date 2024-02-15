@@ -24,6 +24,11 @@ class Menu:
     def playEv():
       self.main.mode = "game"
       self.main.isModeRunning = False
+
+    @leaderboard.bindOnClick
+    def leaderboardEv():
+      self.main.mode = "leaderboard"
+      self.main.isModeRunning = False
     
     @exit.bindOnClick
     def exitEv():

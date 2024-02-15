@@ -29,22 +29,18 @@ class LogIn:
             passwd = input("Password: ")
             passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest()
 
-            self.cursor.execute("SELECT playerID, userName, passHash FROM player")
+            self.cursor.execute(f"SELECT playerID, userName, passHash FROM player WHERE userName = '{user}'")
             data = self.cursor.fetchall()
-            for i in data:
-                if i[1] == user:
-                    if i[2] == passwd:
-                        pass
-                        self.main.user = i[0]
-                        self.main.mode = "menu"
-                        return 
-                        #login
-                    else:
-                        print("Incorrect password")
-                        break
-            else:
+            if not(data):
                 print("User not found")
-        
+            elif data[0][2] == passwd:
+                self.main.user = data[0][0]
+                self.main.mode = "menu"
+                return 
+                #login
+            else:
+                print("Incorrect password")
+           
 
     def createUser(self):
         self.cursor.execute("SELECT userName FROM player")
@@ -68,6 +64,7 @@ class LogIn:
         passwd = input("Enter a password\n")
         passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest()
         self.cursor.execute(f"INSERT INTO player(userName, passHash) VALUES (\"{name}\", \"{passwd}\");")
+        self.main.conn.commit()
         return self.menu()
 
         
