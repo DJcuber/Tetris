@@ -9,18 +9,22 @@ class Leaderboard:
         display.window.fill("#FFF8F0")
         display.ui = []
 
-        self.main.cursor.execute("SELECT playerID, datePlayed, score FROM score")
+        self.main.cursor.execute("SELECT userName, datePlayed, score FROM score, player WHERE score.playerID = player.playerID")
         data = self.main.cursor.fetchall()
         scoreList = [None]*len(data)
         for i, record in enumerate(data):
             scoreList[i] = Score(record[0], record[1], record[2])
         self.insertionSort(scoreList)
-        for i in scoreList:
-            print(i.score)
     
         banner = display.addElement((0, 0), (display.windowSize[0], display.windowSize[1]*(1/4)), "#77878B", text="Leaderboard")
-        background = display.addElement((display.windowSize[0]*2/7, display.windowSize[1]*3/10), (display.windowSize[0]*3/7, display.windowSize[1]*13/20), "#D3D3D3")
+        background = display.addElement((display.windowSize[0]*2/7, display.windowSize[1]*7/20), (display.windowSize[0]*3/7, display.windowSize[1]*1/2), "#D3D3D3")
 
+        scoresUI = []
+        for i in range(10):
+            if i < len(scoreList):
+                entry = scoreList[i]
+                scoresUI.append(display.addElement((display.windowSize[0]*2/7, display.windowSize[1]*(7+i)/20), (display.windowSize[0]*3/7, display.windowSize[1]/20), "#D3D3D3", text = f"{entry.name: <15} {entry.date: ^10} {entry.score: >15}"))
+        
         while self.main.isRunning and self.main.isModeRunning:
           self.main.display.render()
           if self.main.eventHandle():
@@ -37,9 +41,9 @@ class Leaderboard:
             scores[index] = value
 
 class Score:
-    def __init__(self, playerID, date, score):
-        self.playerID = playerID
-        self.date = date
+    def __init__(self, name, date, score):
+        self.name = name
+        self.date = str(date)
         self.score = score
 
 
