@@ -22,6 +22,8 @@ class Game:
     for i in unique: #IS VERY BROKEN NOT
       value = i[0](i[1])
       if i[0] == self.currentPiece.place or value == "place":
+        if value == "place":
+          self.currentPiece.place([None])
         self.currentBag.pop(0)
         self.currentPiece = self.currentBag[0](self.board)
         if len(self.currentBag) < 7:
@@ -104,8 +106,7 @@ class Game:
         self.processActions()
 
       if (ticks % (self.main.tickrate / 2)) == 0: #2 times a sec
-        if self.addAction(self.currentPiece.move, [0, -1]):
-          self.addAction(self.currentPiece.place, [None])
+        self.addAction(self.currentPiece.move, [0, -1])
 
       if ticks == self.main.tickrate:
         ticks = 0
