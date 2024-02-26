@@ -36,6 +36,7 @@ class LogIn:
             elif data[0][2] == passwd:
                 self.main.user = data[0][0]
                 self.main.mode = "menu"
+                print("Logged in")
                 return 
                 #login
             else:

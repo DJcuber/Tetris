@@ -4,7 +4,6 @@ class Leaderboard:
         self.leaderboardLoop()
 
     def leaderboardLoop(self):
-        self.main.isModeRunning = True
         display = self.main.display
         display.window.fill("#FFF8F0")
         display.ui = []
@@ -18,7 +17,14 @@ class Leaderboard:
     
         banner = display.addElement((0, 0), (display.windowSize[0], display.windowSize[1]*(1/4)), "#77878B", text="Leaderboard")
         background = display.addElement((display.windowSize[0]*2/7, display.windowSize[1]*7/20), (display.windowSize[0]*3/7, display.windowSize[1]*1/2), "#D3D3D3")
+        menu = display.addElement((display.windowSize[0]/20, display.windowSize[1]/20), (display.windowSize[0]/20, display.windowSize[1]/20), "#DD1C1A", text = "<-")
 
+        @menu.bindOnClick
+        def menuEv():
+            self.main.mode = "menu"
+            self.main.isModeRunning = False
+            print("ee ee")
+        
         scoresUI = []
         for i in range(10):
             if i < len(scoreList):
