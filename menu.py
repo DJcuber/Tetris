@@ -3,7 +3,7 @@ import ui
 
 class Menu:
   def __init__(self, main) -> None:
-    self.main = main
+    self.main: object = main
     self.menuLoop()
 
   def menuLoop(self) -> None:

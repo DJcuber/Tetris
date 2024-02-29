@@ -5,15 +5,15 @@ import random
 
 class Game:
   def __init__(self, main) -> None:
-    self.main = main
+    self.main: object = main
     self.gameRunning: bool = True
     self.actionQueue: list[list] = []
     self.gameLoop()
 
-  def addAction(self, *args):
+  def addAction(self, *args) -> None:
     self.actionQueue.append(args)
 
-  def processActions(self):
+  def processActions(self) -> None:
     unique = []
     for i in self.actionQueue:
       if not(i in unique):
@@ -41,9 +41,9 @@ class Game:
     display = self.main.display
     display.window.fill("#FFF8F0")
     display.ui = []
-    self.board = Board(self)
+    self.board: object = Board(self)
 
-    self.score = 0
+    self.score: int = 0
     #scoreUI = display.addElement((display.windowSize[0]/2, display.windowSize[1]*1/24), (display.windowSize[0]/2, display.windowSize[1]/24), "#FFF8F0", text="score:")
     scorePos = (display.windowSize[0]/2, display.windowSize[1]/24)
     scoreSize = (display.windowSize[0]/4, display.windowSize[1]/24)
@@ -53,10 +53,10 @@ class Game:
 
     ticks = 0
 
-    self.pieceList = [pieces.IPiece, pieces.OPiece, pieces.TPiece, pieces.SPiece, pieces.ZPiece, pieces.JPiece, pieces.LPiece]
-    self.currentBag = [i for i in self.pieceList]
+    self.pieceList: list[object] = [pieces.IPiece, pieces.OPiece, pieces.TPiece, pieces.SPiece, pieces.ZPiece, pieces.JPiece, pieces.LPiece]
+    self.currentBag: list[object] = [i for i in self.pieceList]
     random.shuffle(self.currentBag)
-    self.currentPiece = self.currentBag[0](self.board)
+    self.currentPiece: object = self.currentBag[0](self.board)
     self.currentPiece.move((0, 0))
      
 
@@ -134,7 +134,7 @@ class Board:
           self.board[i][j].surface.fill(Square.colors[self.board[i][j].state])
         self.surface.blit(self.board[i][j].surface, (i*self.game.main.display.windowSize[1]/24, self.game.main.display.windowSize[1] * 22/24 - (j+1)*self.game.main.display.windowSize[1]/24)) #AND HERE
 
-  def clearRow(self, rows) -> int:
+  def clearRow(self, rows) -> None:
     linesCleared = 0
     for rowIndex in range(len(rows)):
       
@@ -159,13 +159,13 @@ class Board:
       self.game.score += 300
     elif linesCleared == 4:
       self.game.score += 1200
-    return 0
+
   
 
 class Square:
   colors = [None, "#00ffff", "#ffff00", "#9900cc", "#00ff00", "#ff0000", "#0000ff", "#ff9900", "#999999"]
   def __init__ (self, board) -> None:
-    self.board: Board = board
-    self.surface: pg.Surface = pg.Surface((self.board.game.main.display.windowSize[1]/24, self.board.game.main.display.windowSize[1]/24))
+    self.board: object = board
+    self.surface: object = pg.Surface((self.board.game.main.display.windowSize[1]/24, self.board.game.main.display.windowSize[1]/24))
     self.state: int = 0 #0: None, 1: Cyan, 2: Yellow, 3: Purple, 4: Green, 5: Red, 6: Blue, 7: Orange, 8: Gray
 

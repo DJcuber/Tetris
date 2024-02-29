@@ -3,12 +3,12 @@ import ui
 import time
 
 class GameOver:
-    def __init__(self, main, score):
-        self.main = main
-        self.score = score
+    def __init__(self, main, score) -> None:
+        self.main: object = main
+        self.score: int = score
         self.gameOverLoop()
 
-    def gameOverLoop(self):
+    def gameOverLoop(self) -> None:
         self.main.isModeRunning = True
         display = self.main.display
         display.window.fill("#FFF8F0")
@@ -34,8 +34,7 @@ class GameOver:
 
         currentDate = time.strftime("%Y-%m-%d", time.gmtime())
         
-        self.main.cursor.execute(f'INSERT INTO score(score, datePlayed, playerID) VALUES({self.score}, "{currentDate}", {self.main.user})')
-        self.main.conn.commit()
+        self.main.db.mutate(f'INSERT INTO score(score, datePlayed, playerID) VALUES({self.score}, "{currentDate}", {self.main.db.user})')
         
         while self.main.isRunning and self.main.isModeRunning:
           self.main.display.render()

@@ -1,15 +1,15 @@
 class Leaderboard:
-    def __init__(self, main):
-        self.main = main
+    def __init__(self, main) -> None:
+        self.main: object = main
         self.leaderboardLoop()
 
-    def leaderboardLoop(self):
+    def leaderboardLoop(self) -> int:
         display = self.main.display
         display.window.fill("#FFF8F0")
         display.ui = []
 
-        self.main.cursor.execute("SELECT userName, datePlayed, score FROM score, player WHERE score.playerID = player.playerID")
-        data = self.main.cursor.fetchall()
+        data = self.main.db.search("SELECT userName, datePlayed, score FROM score, player WHERE score.playerID = player.playerID")
+        
         scoreList = [None]*len(data)
         for i, record in enumerate(data):
             scoreList[i] = Score(record[0], record[1], record[2])
@@ -23,7 +23,6 @@ class Leaderboard:
         def menuEv():
             self.main.mode = "menu"
             self.main.isModeRunning = False
-            print("ee ee")
         
         scoresUI = []
         for i in range(10):
@@ -37,7 +36,7 @@ class Leaderboard:
             return 1
           self.main.clock.tick(self.main.tickrate)
 
-    def insertionSort(self, scores):
+    def insertionSort(self, scores) -> None:
         for i in range(1, len(scores)):
             index = i
             value = scores[i]
@@ -47,9 +46,9 @@ class Leaderboard:
             scores[index] = value
 
 class Score:
-    def __init__(self, name, date, score):
-        self.name = name
-        self.date = str(date)
-        self.score = score
+    def __init__(self, name, date, score) -> None:
+        self.name: str = name
+        self.date: str = str(date)
+        self.score: int = score
 
 

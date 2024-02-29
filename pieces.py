@@ -73,7 +73,7 @@ class Piece:
     self.board.updateBoard()
     return 0
 
-  def place(self, *args):
+  def place(self, *args) -> None:
     while not(self.move([0, -1])):
           pass
     rows = [i[1] + self.piecePos[1] for i in self.squarePos[self.rotation]]

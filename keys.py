@@ -4,7 +4,7 @@ import json
 
 
 class Keys:
-  def __init__(self):
+  def __init__(self) -> None:
     with open("options.json", "r") as f:
       self.binds: dict = json.loads(f.read())["keybinds"]
     localsdict = local.__dict__
@@ -17,7 +17,7 @@ class Keys:
     self.ctx = None
 
   def bindOnKey(self, *args, **kwargs):
-    def inner(func):
+    def inner(func) -> None:
       self.keyFunc[kwargs["action"]] = func
       if "ctx" in kwargs:
         self.ctx = kwargs["ctx"]
