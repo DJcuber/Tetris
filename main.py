@@ -62,7 +62,6 @@ class Main:
         self.db = db.Database(self)
         login = logIn.LogIn(self)
         self.db.connect()
-        login.menu()
         self.initPg()
       elif self.mode == "leaderboard":
         leaderboard.Leaderboard(self)

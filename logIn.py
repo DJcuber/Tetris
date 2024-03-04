@@ -3,6 +3,7 @@ import hashlib
 class LogIn:
     def __init__(self, main) -> None:
         self.main: object = main
+        self.menu()
 
     def menu(self) -> None:
         choice = input("1. Login\n2. Create User\n")
