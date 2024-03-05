@@ -66,7 +66,7 @@ class Game:
 
     @self.main.keys.bindOnKey(action = "rotClock", ctx = self)
     def rotClockBind(ctx):
-      ctx.currentPiece.rotate(1)
+      ctx.currentPiece.rotate(1) #isn't added to queue, could cause bug
 
     @self.main.keys.bindOnKey(action = "rotAnti", ctx = self)
     def rotClockBind(ctx):
