@@ -5,13 +5,17 @@ class Piece:
     self.squarePos: list[list[list[int]]] = [[[0 for i in range(2)] for i in range(4)] for i in range(4)]
     self.rotation = 0
     self.color = 0
+    
   
   def move(self, direction) -> int:
     newPos: list[list[int]] = [[i[0]+direction[0]+self.piecePos[0], i[1]+direction[1]+self.piecePos[1]] for i in self.squarePos[self.rotation]]
     
     #oldState: int = self.board.board[self.squarePos[self.rotation][0][0]+self.piecePos[0]][self.squarePos[self.rotation][0][1]+self.piecePos[1]].state
+
     
     for i in self.squarePos[self.rotation]:
+      if self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state != 0 and self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state != self.color:
+        return 1
       self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = 0 #Removes previous squares
     
     for i in newPos:
@@ -19,12 +23,16 @@ class Piece:
         for j, k in enumerate(self.squarePos[self.rotation]):
           self.board.board[k[0]+self.piecePos[0]][k[1]+self.piecePos[1]].state = self.color
         self.board.updateBoard()
+        if i[1] < 0:
+          return "place"
         return 1
 
       elif self.board.board[i[0]][i[1]].state != 0:
         for j, k in enumerate(self.squarePos[self.rotation]):
           self.board.board[k[0]+self.piecePos[0]][k[1]+self.piecePos[1]].state = self.color
         self.board.updateBoard()
+        if direction[1] == -1:
+          return "place"
         return 1
 
     self.piecePos = [self.piecePos[0]+direction[0], self.piecePos[1]+direction[1]] #updates position
@@ -64,6 +72,13 @@ class Piece:
       self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = self.color #error
     self.board.updateBoard()
     return 0
+
+  def place(self, *args) -> None:
+    while not(self.move([0, -1])):
+          pass
+    rows = [i[1] + self.piecePos[1] for i in self.squarePos[self.rotation]]
+    self.board.clearRow(rows)
+    
       
     
     

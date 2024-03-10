@@ -4,18 +4,24 @@ import menu
 import game
 import keys
 import ui
+import logIn
+import leaderboard
+import db
 
 class Main:
   def __init__(self) -> None:
-    pg.init()
-    self.display: ui.Display = ui.Display()
-    self.clock: pg.time.Clock = pg.time.Clock()
-    self.tickrate: int = 64
+    self.mode: str = "login"
     self.isRunning: bool = True
     self.isModeRunning: bool = True
-    self.keys: keys.Keys = keys.Keys()
-    self.mode: str = "menu"
+    self.db: object = None
     self.mainLoop()
+
+  def initPg(self) -> None:
+    pg.init()
+    self.display: object = ui.Display()
+    self.clock: object = pg.time.Clock()
+    self.tickrate: int = 32
+    self.keys: object = keys.Keys()
 
   def eventHandle(self) -> int:
     for ev in pg.event.get():
@@ -52,11 +58,21 @@ class Main:
         menu.Menu(self)
       elif self.mode == "game":
         game.Game(self)
+      elif self.mode == "login":
+        self.db = db.Database(self)
+        login = logIn.LogIn(self)
+        self.db.connect()
+        self.initPg()
+      elif self.mode == "leaderboard":
+        leaderboard.Leaderboard(self)
+      else:
+        self.isRunning = False
     pg.quit()
 
-def main():
+def main() -> None:
   instance = Main()
 
 if __name__ == "__main__":
   main()
   
+#lines of python code: 725
