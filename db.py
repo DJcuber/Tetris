@@ -10,8 +10,7 @@ class Database:
         try:
             self.conn = mysql.connector.connect(host="localhost", user="root", passwd="", database = "Tetris")
             self.cursor = self.conn.cursor()
-        except byebye:
-            print(byebye)
+        except:
             print("Database went :(")
             quit()
             

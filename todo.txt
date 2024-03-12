@@ -8,7 +8,7 @@ hold and queue ui -
 database x
 log in screen x
 
-Analysis - Monday
+Analysis - Tuesday
 Design - Wednesday
   AH concepts + Integration: Tuesday
   Wireframes: Wednesday

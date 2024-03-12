@@ -13,13 +13,13 @@ class Game:
   def addAction(self, *args) -> None:
     self.actionQueue.append(args)
 
-  def processActions(self) -> None:
+  def processActions(self) -> None: #something in here causes that one weird bug
     unique = []
     for i in self.actionQueue:
       if not(i in unique):
         unique.append(i)
     
-    for i in unique: #IS VERY BROKEN NOT
+    for i in unique:
       value = i[0](i[1])
       if i[0] == self.currentPiece.place or value == "place":
         if value == "place":
@@ -41,35 +41,32 @@ class Game:
     display = self.main.display
     display.window.fill("#FFF8F0")
     display.ui = []
+
     self.board: object = Board(self)
 
     self.score: int = 0
-    #scoreUI = display.addElement((display.windowSize[0]/2, display.windowSize[1]*1/24), (display.windowSize[0]/2, display.windowSize[1]/24), "#FFF8F0", text="score:")
     scorePos = (display.windowSize[0]/2, display.windowSize[1]/24)
     scoreSize = (display.windowSize[0]/4, display.windowSize[1]/24)
     scoreSurface = pg.surface.Surface(scoreSize)
-    
-                                
 
     ticks = 0
-
     self.pieceList: list[object] = [pieces.IPiece, pieces.OPiece, pieces.TPiece, pieces.SPiece, pieces.ZPiece, pieces.JPiece, pieces.LPiece]
     self.currentBag: list[object] = [i for i in self.pieceList]
     random.shuffle(self.currentBag)
     self.currentPiece: object = self.currentBag[0](self.board)
     self.currentPiece.move((0, 0))
-     
+    
 
     @self.main.keys.bindOnKey(action = "hDrop", ctx = self) #HAHAHHAHAHAHHAHAHAHHA
     def hDropBind(ctx):
       self.addAction(self.currentPiece.place, [None])
 
-    @self.main.keys.bindOnKey(action = "rotClock", ctx = self)
+    @self.main.keys.bindOnKey(action = "rotClock", ctx = self) #ctx is completely redundant. Remove that part of the code
     def rotClockBind(ctx):
       ctx.currentPiece.rotate(1) #isn't added to queue, could cause bug
 
     @self.main.keys.bindOnKey(action = "rotAnti", ctx = self)
-    def rotClockBind(ctx):
+    def rotAntiBind(ctx):
       ctx.currentPiece.rotate(-1)
     
     while self.gameRunning and self.main.isModeRunning:
@@ -77,11 +74,9 @@ class Game:
       display.window.blit(self.board.surface, ((display.windowSize[0] - display.windowSize[1]*10/24)/2, display.windowSize[1]*2/24))
       if self.main.keys.keyEvents["sDrop"]:
         self.addAction(self.currentPiece.move, [0, -1])
-        #self.currentPiece.move([0, -1])
 
       if self.main.keys.keyEvents["left"] and not(self.main.keys.keyEvents["right"]):
         self.addAction(self.currentPiece.move, [-1, 0])
-        #self.currentPiece.move([-1, 0])
       
       elif self.main.keys.keyEvents["right"] and not(self.main.keys.keyEvents["left"]):
         self.addAction(self.currentPiece.move, [1, 0])
@@ -122,12 +117,12 @@ class Board:
   def __init__(self, game) -> None:
     self.game: Game = game
     self.board: list[list[Square]] = [[Square(self) for i in range(22)] for i in range(10)]
-    self.surface: pg.Surface = pg.Surface((self.game.main.display.windowSize[1]*10/24, self.game.main.display.windowSize[1]*22/24)) #CHANGE THESE NUMBERS
+    self.surface: pg.Surface = pg.Surface((self.game.main.display.windowSize[1]*10/24, self.game.main.display.windowSize[1]*22/24))
     self.surface.fill("#FFFFFF")
   
   def updateBoard(self) -> None:
     for i in range(10):
-      for j in range(22):  #22
+      for j in range(22):
         if self.board[i][j].state == 0:
           self.board[i][j].surface.fill("#ffffff")
         else:
@@ -136,7 +131,7 @@ class Board:
 
   def clearRow(self, rows) -> None:
     linesCleared = 0
-    for rowIndex in range(len(rows)):
+    for rowIndex in range(len(rows)): #Something strange sometimes happens, revisit
       
       for column in self.board:
         if column[rows[rowIndex]].state == 0:

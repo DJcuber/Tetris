@@ -6,16 +6,22 @@ class LogIn:
         self.menu()
 
     def menu(self) -> None:
-        choice = input("1. Login\n2. Create User\n")
-        while not(choice in ("1", "2")):
-            choice = input("1. Login\n2. Create User\n")
-        if choice == "1":
-            return self.login()
-        return self.createUser()
+        while True:
+          choice = ""
+          while not(choice in ("1", "2")):
+              choice = input("1. Login\n2. Create User\n")
+          if choice == "1":
+              if self.login() == True:
+                  return None
+          elif choice == "2":
+              self.createUser()
     
-    def login(self) -> None:
+    def login(self) -> None: #TODO: Improve validation
+        print('type "back" to go back')
         while True:
             user = input("Username: ")
+            if user == "back":
+                break
             passwd = input("Password: ")
             passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest()
 
@@ -26,25 +32,22 @@ class LogIn:
                 self.main.db.user = data[0][0]
                 self.main.mode = "menu"
                 print("Logged in")
-                return None
-                #login
+                return True
             else:
                 print("Incorrect password")
            
 
-    def createUser(self) -> None:
+    def createUser(self) -> None: #TODO: ^^
+        print('type "back" to go back')
         usernames = self.main.db.search("SELECT userName FROM player")
-        taken = False
-        name = input("Enter a username between 1-32 characters\n")
-        for user in usernames:
-            if user[0] == name:
-                taken = True
-                print("Username taken")
-                break
-        #get users from database and validate
+        taken = True
+        name = ""
+        #get users from database and validates
         while not(1 <= len(name) <= 32) or taken:
             taken = False
             name = input("Enter a username between 1-32 characters\n")
+            if name == "back":
+                return None
             for user in usernames:
                 if user[0] == name:
                     taken = True
@@ -53,10 +56,5 @@ class LogIn:
         passwd = input("Enter a password\n")
         passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest()
         self.main.db.mutate(f"INSERT INTO player(userName, passHash) VALUES (\"{name}\", \"{passwd}\");")
-        return self.menu()
 
-        
-        
-    
-            
-
+#Note: The way the program calls each method recursively makes it technically possible to stack overflow the program. Fixed!
