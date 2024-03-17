@@ -69,6 +69,8 @@ class Game:
     def rotAntiBind(ctx):
       ctx.currentPiece.rotate(-1)
     
+    #rotate 180 degrees
+    
     while self.gameRunning and self.main.isModeRunning:
       
       display.window.blit(self.board.surface, ((display.windowSize[0] - display.windowSize[1]*10/24)/2, display.windowSize[1]*2/24))
