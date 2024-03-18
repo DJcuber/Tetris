@@ -5,6 +5,7 @@ class Database:
         self.conn: object = None
         self.cursor: object = None
         self.user: int = -1
+        self.connect()
         
     def connect(self) -> None:
         try:

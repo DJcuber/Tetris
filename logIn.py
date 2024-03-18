@@ -17,7 +17,7 @@ class LogIn:
               self.createUser()
     
     def login(self) -> None: #TODO: Improve validation
-        print('type "back" to go back')
+        print('Type "back" to go back')
         while True:
             user = input("Username: ")
             if user == "back":
@@ -38,7 +38,7 @@ class LogIn:
            
 
     def createUser(self) -> None: #TODO: ^^
-        print('type "back" to go back')
+        print('Type "back" to go back')
         usernames = self.main.db.search("SELECT userName FROM player")
         taken = True
         name = ""

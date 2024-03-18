@@ -68,8 +68,7 @@ class Game:
     @self.main.keys.bindOnKey(action = "rotAnti", ctx = self)
     def rotAntiBind(ctx):
       ctx.currentPiece.rotate(-1)
-    
-    #rotate 180 degrees
+
     
     while self.gameRunning and self.main.isModeRunning:
       

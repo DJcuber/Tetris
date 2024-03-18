@@ -4,7 +4,6 @@
     "right":    "RIGHT",
     "hDrop":    "SPACE",
     "sDrop":    "DOWN",
-    "hold":     "c",
     "rotClock": "x",
     "rotAnti":  "z"
   }
