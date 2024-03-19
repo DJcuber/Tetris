@@ -11,7 +11,8 @@ class Menu:
     display.window.fill("#FFF8F0")
     display.ui = []
 
-    banner = display.addElement((0, 0), (display.windowSize[0], display.windowSize[1]*(1/4)), "#77878B", text="Tetrin Time")
+    #creates ui
+    banner = display.addElement((0, 0), (display.windowSize[0], display.windowSize[1]*(1/4)), "#77878B", text="Tetrin") #Can't belive it's not tetris
 
     play = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/10), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#23CE6B", text="Play")
 
@@ -20,6 +21,7 @@ class Menu:
 
     exit = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/4), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#DD1C1A", text="Quit")
     
+    #creates events that trigger when a button is pressed
     @play.bindOnClick
     def playEv():
       self.main.mode = "game"
@@ -39,7 +41,7 @@ class Menu:
 
     
     while self.main.isRunning and self.main.isModeRunning:
-      
+      #handles inputs and display
       self.main.display.render()
       if self.main.eventHandle():
         return 1

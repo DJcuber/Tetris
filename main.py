@@ -17,11 +17,13 @@ class Main:
     self.mainLoop()
 
   def initPg(self) -> None:
+    #creates pygame screen and other variables
     pg.init()
     self.display: object = ui.Display()
     self.clock: object = pg.time.Clock()
     self.tickrate: int = 32
     self.keys: object = keys.Keys()
+    
 
   def eventHandle(self) -> int:
     for ev in pg.event.get():
@@ -33,16 +35,20 @@ class Main:
       elif ev.type == pg.KEYDOWN:
         for i, j in self.keys.binds.items():
           if ev.key == j:
+            #runs whenever a bound key is pressed
             self.keys.keyEvents[i] = True
             for bind in self.keys.keyFunc:
               if bind == i:
-                self.keys.keyFunc[bind](self.keys.ctx)
+                #runs whenever a key that has an action is pressed
+                self.keys.keyFunc[bind]()
+            break
       
       elif ev.type == pg.KEYUP:
         for i, j in self.keys.binds.items():
           if ev.key == j:
             self.keys.keyEvents[i] = False
       
+      #these run whenever the a mouse button is pressed/unpressed
       elif ev.type == pg.MOUSEBUTTONDOWN:
         self.display.clickEvent((True, ev.pos, ev.button))
 
@@ -59,8 +65,10 @@ class Main:
       elif self.mode == "game":
         game.Game(self)
       elif self.mode == "login":
+        #connects to database and runs the login screen
         self.db = db.Database(self)
         login = logIn.LogIn(self)
+
         self.initPg()
       elif self.mode == "leaderboard":
         leaderboard.Leaderboard(self)

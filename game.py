@@ -13,15 +13,16 @@ class Game:
   def addAction(self, *args) -> None:
     self.actionQueue.append(args)
 
-  def processActions(self) -> None: #something in here causes that one weird bug
+  def processActions(self) -> None: #something in here causes that one weird bug. Bug may be because methods run after piece is deleted
+    #removes repeated actions
     unique = []
     for i in self.actionQueue:
       if not(i in unique):
         unique.append(i)
     
-    for i in unique:
-      value = i[0](i[1])
-      if i[0] == self.currentPiece.place or value == "place":
+    for func, args in unique:
+      value = func(args)
+      if func == self.currentPiece.place or value == "place":
         if value == "place":
           self.currentPiece.place([None])
         self.currentBag.pop(0)
@@ -30,9 +31,10 @@ class Game:
           tempBag = [i for i in self.pieceList]
           random.shuffle(tempBag)
           for i in tempBag:
-            self.currentBag.append(i)
+            self.currentBag.append(i) #This may be where the problem was, variable "i" was redefined
         if self.currentPiece.move((0, 0)) == 1:
-          self.main.isModeRunning = False #doesn't quit loop
+          self.main.isModeRunning = False 
+        break
           
     self.actionQueue = []
   
@@ -42,6 +44,7 @@ class Game:
     display.window.fill("#FFF8F0")
     display.ui = []
 
+    #game variables are initialised
     self.board: object = Board(self)
 
     self.score: int = 0
@@ -56,23 +59,25 @@ class Game:
     self.currentPiece: object = self.currentBag[0](self.board)
     self.currentPiece.move((0, 0))
     
-
-    @self.main.keys.bindOnKey(action = "hDrop", ctx = self) #HAHAHHAHAHAHHAHAHAHHA
-    def hDropBind(ctx):
+    #adds actions to keyboard inputs
+    @self.main.keys.bindOnKey(action = "hDrop") 
+    def hDropBind():
       self.addAction(self.currentPiece.place, [None])
 
-    @self.main.keys.bindOnKey(action = "rotClock", ctx = self) #ctx is completely redundant. Remove that part of the code
-    def rotClockBind(ctx):
-      ctx.currentPiece.rotate(1) #isn't added to queue, could cause bug
+    @self.main.keys.bindOnKey(action = "rotClock") #ctx is completely redundant. Remove that part of the code. Removed!
+    def rotClockBind():
+      self.addAction(self.currentPiece.rotate, 1) 
 
-    @self.main.keys.bindOnKey(action = "rotAnti", ctx = self)
-    def rotAntiBind(ctx):
-      ctx.currentPiece.rotate(-1)
+    @self.main.keys.bindOnKey(action = "rotAnti")
+    def rotAntiBind():
+      self.addAction(self.currentPiece.rotate, -1)
 
     
     while self.gameRunning and self.main.isModeRunning:
-      
+      #displays the board
       display.window.blit(self.board.surface, ((display.windowSize[0] - display.windowSize[1]*10/24)/2, display.windowSize[1]*2/24))
+
+      #adds actions to keyboard inputs
       if self.main.keys.keyEvents["sDrop"]:
         self.addAction(self.currentPiece.move, [0, -1])
 
@@ -81,8 +86,8 @@ class Game:
       
       elif self.main.keys.keyEvents["right"] and not(self.main.keys.keyEvents["left"]):
         self.addAction(self.currentPiece.move, [1, 0])
-        #self.currentPiece.move([1, 0])
 
+      #displays score
       scoreSurface.fill("#FFF8F0")
       scoreText = display.font.render(f"score: {self.score}", True, "#000000")
       scoreRect = scoreText.get_rect(center=(scoreSize[0]//2, scoreSize[1]//2))
@@ -101,12 +106,14 @@ class Game:
       if (ticks % (self.main.tickrate / 16)) == 0: #16 times a sec, ticks % (tickrate / 2)
         self.processActions()
 
+      #moves the piece down automatically
       if (ticks % (self.main.tickrate / 2)) == 0: #2 times a sec
         self.addAction(self.currentPiece.move, [0, -1])
 
       if ticks == self.main.tickrate:
         ticks = 0
-        
+
+    #runs the game over screen when the game ends
     self.main.mode = "game over"
     gameOverScene = gameOver.GameOver(self.main, self.score)
     
@@ -128,7 +135,7 @@ class Board:
           self.board[i][j].surface.fill("#ffffff")
         else:
           self.board[i][j].surface.fill(Square.colors[self.board[i][j].state])
-        self.surface.blit(self.board[i][j].surface, (i*self.game.main.display.windowSize[1]/24, self.game.main.display.windowSize[1] * 22/24 - (j+1)*self.game.main.display.windowSize[1]/24)) #AND HERE
+        self.surface.blit(self.board[i][j].surface, (i*self.game.main.display.windowSize[1]/24, self.game.main.display.windowSize[1] * 22/24 - (j+1)*self.game.main.display.windowSize[1]/24))
 
   def clearRow(self, rows) -> None:
     linesCleared = 0

@@ -36,7 +36,8 @@ class Leaderboard:
             return 1
           self.main.clock.tick(self.main.tickrate)
 
-    def insertionSort(self, scores) -> None:
+    @staticmethod
+    def insertionSort(scores) -> None:
         for i in range(1, len(scores)):
             index = i
             value = scores[i]
@@ -51,4 +52,13 @@ class Score:
         self.date: str = str(date)
         self.score: int = score
 
+def test():
+    nums = [1, 8, 5, 6, 9, 1]
+    array = [Score(None, None, i) for i in nums]
+    Leaderboard.insertionSort(array)
+    for score in array:
+        print(score.score)
+
+if __name__ == "__main__":
+    test()
 

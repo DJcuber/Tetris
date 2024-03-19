@@ -16,9 +16,10 @@ class LogIn:
           elif choice == "2":
               self.createUser()
     
-    def login(self) -> None: #TODO: Improve validation
+    def login(self) -> None: 
         print('Type "back" to go back')
         while True:
+            #asks for a username and password and then checks with the database
             user = input("Username: ")
             if user == "back":
                 break
@@ -37,13 +38,14 @@ class LogIn:
                 print("Incorrect password")
            
 
-    def createUser(self) -> None: #TODO: ^^
+    def createUser(self) -> None: 
         print('Type "back" to go back')
         usernames = self.main.db.search("SELECT userName FROM player")
         taken = True
         name = ""
         #get users from database and validates
         while not(1 <= len(name) <= 32) or taken:
+            #asks the user for a username and then validates it
             taken = False
             name = input("Enter a username between 1-32 characters\n")
             if name == "back":
@@ -57,4 +59,4 @@ class LogIn:
         passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest()
         self.main.db.mutate(f"INSERT INTO player(userName, passHash) VALUES (\"{name}\", \"{passwd}\");")
 
-#Note: The way the program calls each method recursively makes it technically possible to stack overflow the program. Fixed!
+

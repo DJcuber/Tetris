@@ -33,6 +33,7 @@ class GameOver:
             self.main.isModeRunning = False
 
         currentDate = time.strftime("%Y-%m-%d", time.gmtime())
+        print(currentDate)
         
         self.main.db.mutate(f'INSERT INTO score(score, datePlayed, playerID) VALUES({self.score}, "{currentDate}", {self.main.db.user})')
         

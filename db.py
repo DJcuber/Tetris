@@ -9,10 +9,11 @@ class Database:
         
     def connect(self) -> None:
         try:
+            #attempts to connect to the database
             self.conn = mysql.connector.connect(host="localhost", user="root", passwd="", database = "Tetris")
             self.cursor = self.conn.cursor()
         except:
-            print("Database went :(")
+            print("Couldn't connect to database")
             quit()
             
     def search(self, query) -> list[tuple]:
