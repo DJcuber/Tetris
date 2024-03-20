@@ -2,7 +2,9 @@ class Piece:
   def __init__(self, board) -> None:
     self.board: object = board
     self.piecePos: list[int] = [3, 18]
+    #The shape of each piece is defined by a 2d array consisting of the relative coordinates of each square and a list of all the coordinates. It stores this for all possible rotations in a 3d array.
     self.squarePos: list[list[list[int]]] = [[[0 for i in range(2)] for i in range(4)] for i in range(4)]
+
     self.rotation = 0
     self.color = 0
     
@@ -12,32 +14,34 @@ class Piece:
     
     #oldState: int = self.board.board[self.squarePos[self.rotation][0][0]+self.piecePos[0]][self.squarePos[self.rotation][0][1]+self.piecePos[1]].state
 
-    
+    #Removes old piece from the board
     for i in self.squarePos[self.rotation]:
       if self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state != 0 and self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state != self.color:
         return 1
-      self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = 0 #Removes previous squares
+      self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = 0 
     
     for i in newPos:
-      if not(0 <= i[0] <= 9 and 0 <= i[1] <= 21): #checks validity
+      if not(0 <= i[0] <= 9 and 0 <= i[1] <= 21): #checks if the new position is off the screen
+        #converts board back to it's previous state
         for j, k in enumerate(self.squarePos[self.rotation]):
           self.board.board[k[0]+self.piecePos[0]][k[1]+self.piecePos[1]].state = self.color
         self.board.updateBoard()
-        if i[1] < 0:
+        if i[1] < 0: #if the piece reached the bottom of the screen, place the piece
           return "place"
         return 1
 
-      elif self.board.board[i[0]][i[1]].state != 0:
+      elif self.board.board[i[0]][i[1]].state != 0: #if collided with another piece
+        #converts board back to it's previous state
         for j, k in enumerate(self.squarePos[self.rotation]):
           self.board.board[k[0]+self.piecePos[0]][k[1]+self.piecePos[1]].state = self.color
         self.board.updateBoard()
-        if direction[1] == -1:
+        if direction[1] == -1: #if the piece was moving down when it touched another piece, place it
           return "place"
         return 1
 
-    self.piecePos = [self.piecePos[0]+direction[0], self.piecePos[1]+direction[1]] #updates position
+    self.piecePos = [self.piecePos[0]+direction[0], self.piecePos[1]+direction[1]] #updates position of the piece
 
-    
+    #places the piece
     for i in self.squarePos[self.rotation]:
       self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = self.color
     self.board.updateBoard()
@@ -48,25 +52,27 @@ class Piece:
     newRotation = self.rotation + direction
     newRotation %= 4
 
-
     newPos = [[i[0]+self.piecePos[0], i[1]+self.piecePos[1]] for i in self.squarePos[newRotation]]
       
     for i in self.squarePos[self.rotation]:
-      self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = 0 #Removes previous squares
+      self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = 0 #Removes old piece
 
     for i in newPos:
-      if not(0 <= i[0] <= 9 and 0 <= i[1] <= 21): #checks validity
+      if not(0 <= i[0] <= 9 and 0 <= i[1] <= 21): #checks if the new position is still on the screen
+        #adds old pieces back to the screen
         for j, k in enumerate(self.squarePos[self.rotation]):
           self.board.board[k[0]+self.piecePos[0]][k[1]+self.piecePos[1]].state = self.color
         self.board.updateBoard()
         return 1
 
+      #checks if the new position is occupied by a piece
       elif self.board.board[i[0]][i[1]].state != 0:
         for j, k in enumerate(self.squarePos[self.rotation]):
           self.board.board[k[0]+self.piecePos[0]][k[1]+self.piecePos[1]].state = self.color
         self.board.updateBoard()
         return 1
 
+    #update board to add piece with new position
     self.rotation = newRotation
     for i in self.squarePos[self.rotation]:
       self.board.board[i[0]+self.piecePos[0]][i[1]+self.piecePos[1]].state = self.color #error
@@ -74,13 +80,14 @@ class Piece:
     return 0
 
   def place(self, *args) -> None:
-    while not(self.move([0, -1])):
-          pass
+    while not(self.move([0, -1])): #moves the piece down until it cannot move further
+      pass
+    #find what rows the piece occupies and then checks if the lines have been cleared.
     rows = [i[1] + self.piecePos[1] for i in self.squarePos[self.rotation]]
     self.board.clearRow(rows)
     
       
-    
+#Defines the shape of each piece in each rotation, and the colour of each piece
     
 
 class IPiece(Piece):

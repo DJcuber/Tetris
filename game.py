@@ -139,8 +139,8 @@ class Board:
 
   def clearRow(self, rows) -> None:
     linesCleared = 0
-    for rowIndex in range(len(rows)): #Something strange sometimes happens, revisit
-      
+    for rowIndex in range(len(rows)): 
+      #checks row to see if it is full    
       for column in self.board:
         if column[rows[rowIndex]].state == 0:
           break
@@ -148,12 +148,14 @@ class Board:
         #Line is cleared
         for column in range(10):
           for row in range(rows[rowIndex], 21):
+            #moves all rows down
             self.board[column][row] = self.board[column][row+1]
           self.board[column][21] = Square(self)
         linesCleared += 1
         rows = [i - 1 for i in rows]
     self.updateBoard()
-    
+
+    #awards points 
     if linesCleared == 1:
       self.game.score += 40
     elif linesCleared == 2:
@@ -170,5 +172,6 @@ class Square:
   def __init__ (self, board) -> None:
     self.board: object = board
     self.surface: object = pg.Surface((self.board.game.main.display.windowSize[1]/24, self.board.game.main.display.windowSize[1]/24))
-    self.state: int = 0 #0: None, 1: Cyan, 2: Yellow, 3: Purple, 4: Green, 5: Red, 6: Blue, 7: Orange, 8: Gray
+    self.state: int = 0 
+    #0: None, 1: Cyan, 2: Yellow, 3: Purple, 4: Green, 5: Red, 6: Blue, 7: Orange, 8: Gray
 

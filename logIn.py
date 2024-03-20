@@ -33,6 +33,9 @@ class LogIn:
                 self.main.db.user = data[0][0]
                 self.main.mode = "menu"
                 print("Logged in")
+                print("Arrow keys move the piece")
+                print("Space drops the piece instantly")
+                print("X and Z rotate the pieces clockwise and anticlockwise")
                 return True
             else:
                 print("Incorrect password")
