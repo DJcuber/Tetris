@@ -146,11 +146,11 @@ class Board:
           break
       else:
         #Line is cleared
-        for column in range(10):
+        for column in range(10): #..
           for row in range(rows[rowIndex], 21):
             #moves all rows down
             self.board[column][row] = self.board[column][row+1]
-          self.board[column][21] = Square(self)
+          self.board[column][21] = Square(self) #this line of code didn't exist
         linesCleared += 1
         rows = [i - 1 for i in rows]
     self.updateBoard()

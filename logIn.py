@@ -24,7 +24,7 @@ class LogIn:
             if user == "back":
                 break
             passwd = input("Password: ")
-            passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest()
+            passwd = hashlib.sha256(bytes(passwd, "utf-8")).hexdigest() #this line of code didn't exist
 
             data = self.main.db.search(f"SELECT playerID, userName, passHash FROM player WHERE userName = '{user}'")
             if not(data):
@@ -32,10 +32,12 @@ class LogIn:
             elif data[0][2] == passwd:
                 self.main.db.user = data[0][0]
                 self.main.mode = "menu"
+                """
                 print("Logged in")
                 print("Arrow keys move the piece")
                 print("Space drops the piece instantly")
                 print("X and Z rotate the pieces clockwise and anticlockwise")
+                """
                 return True
             else:
                 print("Incorrect password")
@@ -43,10 +45,10 @@ class LogIn:
 
     def createUser(self) -> None: 
         print('Type "back" to go back')
+        #get users from database
         usernames = self.main.db.search("SELECT userName FROM player")
         taken = True
         name = ""
-        #get users from database and validates
         while not(1 <= len(name) <= 32) or taken:
             #asks the user for a username and then validates it
             taken = False

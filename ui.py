@@ -12,7 +12,7 @@ class Display:
     return self.ui[-1] #UIElement
   
   def clickEvent(self, ctx) -> None:
-    #ctx = [mouse down/up, clickpos, button]
+    #ctx = [mouse down/up, clickpos, mouse button]
     for ui in self.ui:
       if (ui.pos[0] <= ctx[1][0] <= ui.pos[0] + ui.size[0]) and (ui.pos[1] <= ctx[1][1] <= ui.pos[1] + ui.size[1]):
         if ctx[0] and ctx[2] == 1:
