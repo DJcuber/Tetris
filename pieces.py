@@ -2,7 +2,8 @@ class Piece:
   def __init__(self, board) -> None:
     self.board: object = board
     self.piecePos: list[int] = [3, 18]
-    #The shape of each piece is defined by a 2d array consisting of the relative coordinates of each square and a list of all the coordinates. It stores this for all possible rotations in a 3d array.
+    #The shape of each piece is defined by a 2d array consisting of the relative coordinates of each square and a list of all the coordinates.
+    #It stores this for all possible rotations in a 3d array.
     self.squarePos: list[list[list[int]]] = [[[0 for i in range(2)] for i in range(4)] for i in range(4)]
 
     self.rotation = 0
@@ -12,7 +13,6 @@ class Piece:
   def move(self, direction) -> int:
     newPos: list[list[int]] = [[i[0]+direction[0]+self.piecePos[0], i[1]+direction[1]+self.piecePos[1]] for i in self.squarePos[self.rotation]]
     
-    #oldState: int = self.board.board[self.squarePos[self.rotation][0][0]+self.piecePos[0]][self.squarePos[self.rotation][0][1]+self.piecePos[1]].state
 
     #Removes old piece from the board
     for i in self.squarePos[self.rotation]:

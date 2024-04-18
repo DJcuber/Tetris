@@ -13,7 +13,7 @@ class Game:
   def addAction(self, *args) -> None:
     self.actionQueue.append(args)
 
-  def processActions(self) -> None: #something in here causes that one weird bug. Bug may be because methods run after piece is deleted
+  def processActions(self) -> None: 
     #removes repeated actions
     unique = []
     for i in self.actionQueue:
@@ -31,7 +31,7 @@ class Game:
           tempBag = [i for i in self.pieceList]
           random.shuffle(tempBag)
           for i in tempBag:
-            self.currentBag.append(i) #This may be where the problem was, variable "i" was redefined
+            self.currentBag.append(i)
         if self.currentPiece.move((0, 0)) == 1:
           self.main.isModeRunning = False 
         break
@@ -64,7 +64,7 @@ class Game:
     def hDropBind():
       self.addAction(self.currentPiece.place, [None])
 
-    @self.main.keys.bindOnKey(action = "rotClock") #ctx is completely redundant. Remove that part of the code. Removed!
+    @self.main.keys.bindOnKey(action = "rotClock") 
     def rotClockBind():
       self.addAction(self.currentPiece.rotate, 1) 
 
@@ -135,7 +135,8 @@ class Board:
           self.board[i][j].surface.fill("#ffffff")
         else:
           self.board[i][j].surface.fill(Square.colors[self.board[i][j].state])
-        self.surface.blit(self.board[i][j].surface, (i*self.game.main.display.windowSize[1]/24, self.game.main.display.windowSize[1] * 22/24 - (j+1)*self.game.main.display.windowSize[1]/24))
+        self.surface.blit(self.board[i][j].surface, (i*self.game.main.display.windowSize[1]/24,
+                                                     self.game.main.display.windowSize[1] * 22/24 - (j+1)*self.game.main.display.windowSize[1]/24))
 
   def clearRow(self, rows) -> None:
     linesCleared = 0

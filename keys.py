@@ -14,7 +14,6 @@ class Keys:
       except:
         print("Invalid settings")
         quit()
-      #pg.constants, pg.locals
     self.keyEvents: dict = {i:False for i in ("left", "right", "hDrop", "sDrop", "hold", "rotClock", "rotAnti")}
     self.keyFunc: dict = dict()
 

@@ -9,7 +9,7 @@ class Display:
   
   def addElement(self, pos, size, color, text=None) -> object:
     self.ui.append(UIElement(pos, size, color, self, text))
-    return self.ui[-1] #UIElement
+    return self.ui[-1] #returns the newly created UI element
   
   def clickEvent(self, ctx) -> None:
     #ctx = [mouse down/up, clickpos, mouse button]
@@ -54,14 +54,3 @@ class UIElement:
   def onClick(self):
     print("Undefined")
 
-def test():
-  display = Display()
-  ui = UIElement([0, 0], [10, 10], None)
-  display.addElement(ui)
-
-  @ui.defOnClick
-  def hi():
-    print("hi")
-  
-  display.clickEvent([1, [2, 2], 1])
-  display.clickEvent([0, [2, 2], 1])

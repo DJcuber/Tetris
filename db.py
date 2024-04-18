@@ -23,3 +23,4 @@ class Database:
     def mutate(self, query) -> None:
         self.cursor.execute(query)
         self.conn.commit()
+

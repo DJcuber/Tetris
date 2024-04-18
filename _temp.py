@@ -1,4 +1,4 @@
-if self.currentPiece.move((0, 0)) == 1:
-          self.main.isModeRunning = False 
-break #fixed
+nums = [1, 8, 5, 6, 9, 1]
 
+for i in nums:
+    print(i)

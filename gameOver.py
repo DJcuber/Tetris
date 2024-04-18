@@ -16,11 +16,14 @@ class GameOver:
     
         banner = display.addElement((0, 0), (display.windowSize[0], display.windowSize[1]*(1/4)), "#77878B", text="Game Over")
 
-        score = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/10), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#FFF8F0", text = f"score: {self.score}")
+        score = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/10), (display.windowSize[0]*3/11, display.windowSize[1]//10),
+                                   "#FFF8F0", text = f"score: {self.score}")
 
-        playAgain = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/5), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#23CE6B", text = "Play Again")
+        playAgain = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/5), (display.windowSize[0]*3/11, display.windowSize[1]//10),
+                                       "#23CE6B", text = "Play Again")
 
-        menu = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/4), (display.windowSize[0]*3/11, display.windowSize[1]//10), "#D3D3D3", text = "Menu")
+        menu = display.addElement((display.windowSize[0]*4/11, display.windowSize[1]*3/4), (display.windowSize[0]*3/11, display.windowSize[1]//10),
+                                  "#D3D3D3", text = "Menu")
 
         @playAgain.bindOnClick
         def playAgainEv():
@@ -48,3 +51,4 @@ from time import gmtime, strftime
 strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
 'Thu, 28 Jun 2001 14:17:15 +0000'
 """
+
